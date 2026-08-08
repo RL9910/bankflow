@@ -14,11 +14,20 @@ public class Account{
     }
 
     public void deposit(BigDecimal amount){
+
+        if(amount.compareTo(BigDecimal.ZERO) <= 0){
+            throw new InvalidAmountException("Invalid amount");
+        }
+
         //BigDecimal is a class/object and need .add() instead of + for primative (int or double)
         balance = balance.add(amount);
     }
 
     public void withdraw(BigDecimal amount){
+        
+        if(amount.compareTo(BigDecimal.ZERO) <= 0){
+            throw new InvalidAmountException("Invalid amount");
+        }
         if (balance.subtract(amount).compareTo(BigDecimal.ZERO) < 0){
             throw new InsufficientFundsException("Insufficient balance");
         }

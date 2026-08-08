@@ -14,6 +14,8 @@ public class Main{
     
         alice.deposit(new BigDecimal("200"));
         bob.withdraw(new BigDecimal("100"));
+
+        alice.deposit(new BigDecimal("-500"));
         bob.withdraw(new BigDecimal("1000"));
 
         System.out.println("Alice balance: " + alice.getBalance());
