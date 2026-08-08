@@ -20,7 +20,7 @@ public class Account{
 
     public void withdraw(BigDecimal amount){
         if (balance.subtract(amount).compareTo(BigDecimal.ZERO) < 0){
-            throw new IllegalArgumentException("Insufficient balance");
+            throw new InsufficientFundsException("Insufficient balance");
         }
         balance = balance.subtract(amount);
     }
