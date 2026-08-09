@@ -1,4 +1,5 @@
 com/bankflow/InvalidAmountException.class
 com/bankflow/Account.class
 com/bankflow/Main.class
+com/bankflow/TransferService.class
 com/bankflow/InsufficientFundsException.class
