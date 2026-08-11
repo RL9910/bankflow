@@ -5,12 +5,18 @@ import java.math.BigDecimal;
 public class Account{
 
     private String ownerName;
-    private BigDecimal balance; 
+    private BigDecimal balance;
+    private Long id; 
 
-    public Account(String ownerName){
+    public Account(Long id, String ownerName){
 
         this.ownerName = ownerName;
         this.balance = BigDecimal.ZERO;
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void deposit(BigDecimal amount){
@@ -24,7 +30,7 @@ public class Account{
     }
 
     public void withdraw(BigDecimal amount){
-        
+
         if(amount.compareTo(BigDecimal.ZERO) <= 0){
             throw new InvalidAmountException("Invalid amount");
         }

@@ -13,8 +13,8 @@ public class TransferServiceTest {
     @Test
     void transferShouldMoveMoneyBetweenAccounts() {
 
-        Account alice = new Account("Alice");
-        Account bob = new Account("Bob");
+        Account alice = new Account(1L, "Alice");
+        Account bob = new Account(2L, "Bob");
 
         alice.deposit(new BigDecimal("100"));
 
@@ -30,8 +30,8 @@ public class TransferServiceTest {
     @Test
     void transferShouldRejectInsufficientFunds() {
 
-        Account alice = new Account("Alice");
-        Account bob = new Account("Bob");
+        Account alice = new Account(1L, "Alice");
+        Account bob = new Account(2L, "Bob");
 
         alice.deposit(new BigDecimal("10"));
 

@@ -13,7 +13,7 @@ public class AccountTest {
     @Test
     void depositShouldIncreaseBalance() {
 
-        Account account = new Account("Alice");
+        Account account = new Account(1L,"Alice");
 
         account.deposit(new BigDecimal("100"));
 
@@ -27,7 +27,7 @@ public class AccountTest {
     @Test
     void withdrawShouldDecreaseBalance(){
 
-        Account account = new Account("Alice");
+        Account account = new Account(1L, "Alice");
 
         account.deposit(new BigDecimal("500"));
 
@@ -40,7 +40,7 @@ public class AccountTest {
     @Test
     void depositShouldRejectNegativeAmount() {
         
-        Account account = new Account("Alice");
+        Account account = new Account(1L, "Alice");
 
         assertThrows(
             InvalidAmountException.class,
@@ -52,7 +52,7 @@ public class AccountTest {
     @Test
     void depositShouldRejectZeroAmount() {
 
-        Account account = new Account("Alice");
+        Account account = new Account(1L, "Alice");
 
         assertThrows(
             InvalidAmountException.class,
@@ -64,7 +64,7 @@ public class AccountTest {
     @Test
     void withdrawShouldRejectNegativeAmount() {
 
-        Account account = new Account("Alice");
+        Account account = new Account(1L, "Alice");
 
         assertThrows(
             InvalidAmountException.class,
@@ -75,7 +75,7 @@ public class AccountTest {
     @Test
     void withdrawShouldRejectZeroAmount() {
 
-        Account account = new Account("Alice");
+        Account account = new Account(1L, "Alice");
 
         assertThrows(
             InvalidAmountException.class,
@@ -86,7 +86,7 @@ public class AccountTest {
     @Test
     void withdrawShouldRejectInsufficientFunds() {
 
-        Account account = new Account("Alice");
+        Account account = new Account(1L, "Alice");
 
         account.deposit(new BigDecimal("500"));
 
