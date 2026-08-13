@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 public class TransferServiceTest {
 
     // @Test
@@ -50,17 +55,24 @@ public class TransferServiceTest {
     @Test
     void transferShouldMoveMoneyBetweenAccounts() {
 
-        AccountService accountService = new AccountService();
-        TransferService transferService = new TransferService(accountService);
+        AccountRepository accountRepository = mock(AccountRepository.class);
 
-        Account alice = accountService.createAccount("Alice");
-        Account bob = accountService.createAccount("Bob");
+        Account alice = new Account("Alice");
+        Account bob = new Account("Bob");
 
         alice.deposit(new BigDecimal("100"));
 
+        when(accountRepository.findById(1L))
+            .thenReturn(Optional.of(alice));
+
+        when(accountRepository.findById(2L))
+            .thenReturn(Optional.of(bob));
+
+        TransferService transferService = new TransferService(accountRepository);
+
         transferService.transfer(
-            alice.getId(),
-            bob.getId(),
+            1L,
+            2L,
             new BigDecimal("50")
         );
 
@@ -71,19 +83,26 @@ public class TransferServiceTest {
     @Test
     void transferShouldRejectInsufficientFunds() {
 
-        AccountService accountService = new AccountService();
-        TransferService transferService = new TransferService(accountService);
+        AccountRepository accountRepository = mock(AccountRepository.class);
 
-        Account alice = accountService.createAccount("Alice");
-        Account bob = accountService.createAccount("Bob");
+        Account alice = new Account("Alice");
+        Account bob = new Account("Bob");
 
         alice.deposit(new BigDecimal("10"));
+
+        when(accountRepository.findById(1L))
+            .thenReturn(Optional.of(alice));
+
+        when(accountRepository.findById(2L))
+            .thenReturn(Optional.of(bob));
+
+        TransferService transferService = new TransferService(accountRepository);
 
         assertThrows(
             InsufficientFundsException.class,
             () -> transferService.transfer(
-                alice.getId(),
-                bob.getId(),
+                1L,
+                2L,
                 new BigDecimal("50")
             )
         );
@@ -91,5 +110,4 @@ public class TransferServiceTest {
         assertEquals(new BigDecimal("10"), alice.getBalance());
         assertEquals(BigDecimal.ZERO, bob.getBalance());
     }
-
 }

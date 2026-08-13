@@ -6,6 +6,7 @@ com/bankflow/CreateAccountRequest.class
 com/bankflow/AccountService.class
 com/bankflow/TransferService.class
 com/bankflow/AccountController.class
+com/bankflow/AccountRepository.class
 com/bankflow/GlobalExceptionHandler.class
 com/bankflow/TransferRequest.class
 com/bankflow/TransferController.class

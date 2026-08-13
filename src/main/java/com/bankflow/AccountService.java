@@ -10,23 +10,34 @@ import java.math.BigDecimal;
 @Service
 public class AccountService {
 
-    private final Map<Long, Account> accounts = new HashMap<>();
-    private long nextId = 1;
+    // private final Map<Long, Account> accounts = new HashMap<>();
+    // private long nextId = 1;
+
+    private final AccountRepository accountRepository;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public Account createAccount(String ownerName) {
-        Account account = new Account(nextId, ownerName);
-        accounts.put(nextId, account);
-        nextId += 1;
-        return account;
+        // Account account = new Account(nextId, ownerName);
+        // accounts.put(nextId, account);
+        // nextId += 1;
+        // return account;
+        Account account = new Account(ownerName);
+        return accountRepository.save(account);
     }
 
     public Account getAccount(Long id) {
 
-        Account account = accounts.get(id);
-        if (account == null) {
-            throw new AccountNotFoundException("Account not found");
-        }
-        return account;
+        // Account account = accounts.get(id);
+        // if (account == null) {
+        //     throw new AccountNotFoundException("Account not found");
+        // }
+        // return account;
+        return accountRepository.findById(id)
+        .orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        
     }
 
     public Account deposit(Long id, BigDecimal amount) {
@@ -35,7 +46,7 @@ public class AccountService {
 
         account.deposit(amount);
 
-        return account;
+        return accountRepository.save(account);
 
     }
 
@@ -45,7 +56,7 @@ public class AccountService {
 
         account.withdraw(amount);
 
-        return account;
+        return accountRepository.save(account);
     }
 
 }

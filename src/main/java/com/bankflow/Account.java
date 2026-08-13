@@ -2,17 +2,29 @@ package com.bankflow;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Account{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String ownerName;
     private BigDecimal balance;
-    private Long id; 
 
-    public Account(Long id, String ownerName){
+
+    protected Account() {}   
+
+    public Account(String ownerName){
 
         this.ownerName = ownerName;
         this.balance = BigDecimal.ZERO;
-        this.id = id;
+
     }
 
     public Long getId() {
