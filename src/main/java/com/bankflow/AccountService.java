@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class AccountService {
 
@@ -24,6 +26,25 @@ public class AccountService {
         if (account == null) {
             throw new AccountNotFoundException("Account not found");
         }
+        return account;
+    }
+
+    public Account deposit(Long id, BigDecimal amount) {
+
+        Account account = this.getAccount(id);
+
+        account.deposit(amount);
+
+        return account;
+
+    }
+
+    public Account withdraw(Long id, BigDecimal amount) {
+
+        Account account = this.getAccount(id);
+
+        account.withdraw(amount);
+
         return account;
     }
 

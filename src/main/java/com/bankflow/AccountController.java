@@ -30,5 +30,19 @@ public class AccountController {
 
     }
 
+    @PostMapping("/accounts/{id}/deposit")
+    public Account deposit(@PathVariable Long id, @RequestBody AmountRequest amount) {
+
+        return accountService.deposit(id, amount.getAmount());
+
+    }
+
+    @PostMapping("/accounts/{id}/withdraw")
+    public Account withdraw(@PathVariable Long id, @RequestBody AmountRequest amount) {
+
+        return accountService.withdraw(id, amount.getAmount());
+
+    }
+
 
 }
