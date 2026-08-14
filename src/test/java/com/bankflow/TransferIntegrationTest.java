@@ -1,6 +1,7 @@
 package com.bankflow;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 
@@ -79,6 +80,43 @@ public class TransferIntegrationTest {
         assertEquals(
             new BigDecimal("40"),
             updatedBob.getBalance()
+        );
+    }
+
+    @Test
+    void failedTransferShouldRollbackChanges() {
+
+        Account alice = accountRepository.save(new Account("Alice"));
+        Account bob = accountRepository.save(new Account("Bob"));
+
+        alice.deposit(new BigDecimal("100"));
+        accountRepository.save(alice);
+
+        assertThrows(
+            InsufficientFundsException.class,
+            () -> transferService.transfer(
+                alice.getId(),
+                bob.getId(),
+                new BigDecimal("500")
+            )
+        );
+
+        Account updatedAlice = accountRepository
+            .findById(alice.getId())
+            .orElseThrow();
+
+        Account updatedBob = accountRepository
+            .findById(bob.getId())
+            .orElseThrow();
+
+        assertEquals(
+            0,
+            new BigDecimal("100").compareTo(updatedAlice.getBalance())
+        );
+
+        assertEquals(
+            0,
+            BigDecimal.ZERO.compareTo(updatedBob.getBalance())
         );
     }
 
