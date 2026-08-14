@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class AccountController {
 
@@ -31,14 +33,14 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/{id}/deposit")
-    public Account deposit(@PathVariable Long id, @RequestBody AmountRequest amount) {
+    public Account deposit(@PathVariable Long id, @Valid @RequestBody AmountRequest amount) {
 
         return accountService.deposit(id, amount.getAmount());
 
     }
 
     @PostMapping("/accounts/{id}/withdraw")
-    public Account withdraw(@PathVariable Long id, @RequestBody AmountRequest amount) {
+    public Account withdraw(@PathVariable Long id, @Valid @RequestBody AmountRequest amount) {
 
         return accountService.withdraw(id, amount.getAmount());
 

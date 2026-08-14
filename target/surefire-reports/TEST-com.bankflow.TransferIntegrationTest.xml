@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.bankflow.AccountTest" time="0.015" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.bankflow.TransferIntegrationTest" time="8.117" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -65,11 +65,79 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="withdrawShouldRejectNegativeAmount" classname="com.bankflow.AccountTest" time="0.001"/>
-  <testcase name="withdrawShouldRejectZeroAmount" classname="com.bankflow.AccountTest" time="0.0"/>
-  <testcase name="depositShouldRejectZeroAmount" classname="com.bankflow.AccountTest" time="0.001"/>
-  <testcase name="withdrawShouldRejectInsufficientFunds" classname="com.bankflow.AccountTest" time="0.0"/>
-  <testcase name="depositShouldIncreaseBalance" classname="com.bankflow.AccountTest" time="0.001"/>
-  <testcase name="withdrawShouldDecreaseBalance" classname="com.bankflow.AccountTest" time="0.002"/>
-  <testcase name="depositShouldRejectNegativeAmount" classname="com.bankflow.AccountTest" time="0.001"/>
+  <testcase name="transferShouldPersistBothBalanceChanges" classname="com.bankflow.TransferIntegrationTest" time="0.049">
+    <system-out><![CDATA[17:54:23.474 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.bankflow.TransferIntegrationTest]: TransferIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:54:23.528 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.bankflow.BankFlowApplication for test class com.bankflow.TransferIntegrationTest
+17:54:23.577 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+17:54:23.578 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+17:54:23.582 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 1.21.4
+17:54:23.762 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Unix socket (unix:///var/run/docker.sock)
+17:54:23.766 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+17:54:23.778 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.0.1
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 7836 MB
+  Labels: 
+    com.docker.desktop.address=unix:///Users/richardlee/Library/Containers/com.docker.docker/Data/docker-cli.sock
+17:54:23.868 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling docker image: testcontainers/ryuk:0.12.0. Please be patient; this may take some time but only needs to be done once.
+17:54:26.631 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+17:54:27.793 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Starting to pull image
+17:54:27.811 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling image layers:  0 pending,  0 downloaded,  0 extracted, (0 bytes/0 bytes)
+17:54:28.548 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling image layers:  2 pending,  1 downloaded,  0 extracted, (3 MB/? MB)
+17:54:28.650 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling image layers:  2 pending,  1 downloaded,  1 extracted, (5 MB/? MB)
+17:54:28.849 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling image layers:  1 pending,  2 downloaded,  1 extracted, (8 MB/? MB)
+17:54:28.926 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling image layers:  0 pending,  3 downloaded,  1 extracted, (8 MB/10 MB)
+17:54:28.927 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling image layers:  0 pending,  3 downloaded,  2 extracted, (8 MB/10 MB)
+17:54:28.929 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pulling image layers:  0 pending,  3 downloaded,  3 extracted, (8 MB/10 MB)
+17:54:28.930 [docker-java-stream--1931961954] INFO tc.testcontainers/ryuk:0.12.0 -- Pull complete. 3 layers, pulled in 1s (downloaded 8 MB at 8 MB/s)
+17:54:28.930 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Image testcontainers/ryuk:0.12.0 pull took PT5.062176S
+17:54:28.999 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Creating container for image: testcontainers/ryuk:0.12.0
+17:54:29.090 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Container testcontainers/ryuk:0.12.0 is starting: 3c46c4a4d921d032bad21801bf58a2d96ac82d9c5d7126a83fcab5525ecabf96
+17:54:29.303 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Container testcontainers/ryuk:0.12.0 started in PT0.304217S
+17:54:29.310 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+17:54:29.310 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+17:54:29.310 [main] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+17:54:29.310 [main] INFO tc.postgres:16 -- Creating container for image: postgres:16
+17:54:29.347 [main] INFO tc.postgres:16 -- Container postgres:16 is starting: 5e65713034985ad48c585be70858b033cae124a003153694e02b77521fbef833
+17:54:30.138 [main] INFO tc.postgres:16 -- Container postgres:16 started in PT0.828312S
+17:54:30.139 [main] INFO tc.postgres:16 -- Container is started (JDBC URL: jdbc:postgresql://localhost:57711/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.10)
+
+2026-08-14T17:54:30.255+01:00  INFO 9904 --- [           main] com.bankflow.TransferIntegrationTest     : Starting TransferIntegrationTest using Java 21.0.12 with PID 9904 (started by richardlee in /Users/richardlee/Local Documents/coding/bankflow_project/bankflow)
+2026-08-14T17:54:30.255+01:00  INFO 9904 --- [           main] com.bankflow.TransferIntegrationTest     : No active profile set, falling back to 1 default profile: "default"
+2026-08-14T17:54:30.456+01:00  INFO 9904 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-14T17:54:30.474+01:00  INFO 9904 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 1 JPA repository interface.
+2026-08-14T17:54:30.595+01:00  INFO 9904 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-08-14T17:54:30.624+01:00  INFO 9904 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.41.Final
+2026-08-14T17:54:30.635+01:00  INFO 9904 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-08-14T17:54:30.673+01:00  INFO 9904 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-14T17:54:30.681+01:00  INFO 9904 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-08-14T17:54:30.753+01:00  INFO 9904 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@647ce968
+2026-08-14T17:54:30.754+01:00  INFO 9904 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-08-14T17:54:30.780+01:00  INFO 9904 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 16.13
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-14T17:54:31.009+01:00  INFO 9904 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table account (id bigint generated by default as identity, balance numeric(38,2), owner_name varchar(255), primary key (id))
+2026-08-14T17:54:31.033+01:00  INFO 9904 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-14T17:54:31.156+01:00  WARN 9904 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-14T17:54:31.276+01:00  INFO 9904 --- [           main] com.bankflow.TransferIntegrationTest     : Started TransferIntegrationTest in 1.121 seconds (process running for 8.497)
+Hibernate: insert into account (balance,owner_name) values (?,?)
+Hibernate: insert into account (balance,owner_name) values (?,?)
+]]></system-out>
+  </testcase>
 </testsuite>

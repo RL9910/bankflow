@@ -26,7 +26,7 @@ public class TransferService {
     @Transactional
     public void transfer(Long fromId, Long toId, BigDecimal amount) {
 
-         Account from = accountRepository.findById(fromId)
+        Account from = accountRepository.findById(fromId)
             .orElseThrow(() -> new AccountNotFoundException("Source account not found"));
 
         Account to = accountRepository.findById(toId)
