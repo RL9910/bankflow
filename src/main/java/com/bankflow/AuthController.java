@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, JwtService jwtService) {
         this.authService = authService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/auth/register")
@@ -28,17 +30,16 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public UserResponse login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@RequestBody LoginRequest request) {
 
         User user = authService.login(
             request.getEmail(),
             request.getPassword()
         );
 
-        return new UserResponse(
-            user.getId(),
-            user.getEmail()
-        );
+        String token = jwtService.generateToken(user);
+
+        return new LoginResponse(token);
 
     }
 

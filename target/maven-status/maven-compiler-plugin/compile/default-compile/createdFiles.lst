@@ -2,8 +2,10 @@ com/bankflow/UserResponse.class
 com/bankflow/SecurityConfig.class
 com/bankflow/InvalidAmountException.class
 com/bankflow/CreateAccountRequest.class
+com/bankflow/JwtAuthenticationFilter.class
 com/bankflow/AccountService.class
 com/bankflow/TransferService.class
+com/bankflow/JwtService.class
 com/bankflow/GlobalExceptionHandler.class
 com/bankflow/TransferRequest.class
 com/bankflow/User.class
@@ -14,6 +16,7 @@ com/bankflow/AccountNotFoundException.class
 com/bankflow/InsufficientFundsException.class
 com/bankflow/Account.class
 com/bankflow/RegisterRequest.class
+com/bankflow/LoginResponse.class
 com/bankflow/AccountController.class
 com/bankflow/AuthController.class
 com/bankflow/LoginRequest.class
