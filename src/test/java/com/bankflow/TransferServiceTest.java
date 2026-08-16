@@ -57,8 +57,18 @@ public class TransferServiceTest {
 
         AccountRepository accountRepository = mock(AccountRepository.class);
 
-        Account alice = new Account("Alice");
-        Account bob = new Account("Bob");
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
+
+        User bobUser = new User(
+            "bob@example.com",
+            "hashed-password"
+        );
+
+        Account alice = new Account("Alice", aliceUser);
+        Account bob = new Account("Bob", bobUser);
 
         alice.deposit(new BigDecimal("100"));
 
@@ -85,8 +95,18 @@ public class TransferServiceTest {
 
         AccountRepository accountRepository = mock(AccountRepository.class);
 
-        Account alice = new Account("Alice");
-        Account bob = new Account("Bob");
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
+
+        User bobUser = new User(
+            "bob@example.com",
+            "hashed-password"
+        );
+
+        Account alice = new Account("Alice", aliceUser);
+        Account bob = new Account("Bob", bobUser);
 
         alice.deposit(new BigDecimal("10"));
 

@@ -13,7 +13,12 @@ public class AccountTest {
     @Test
     void depositShouldIncreaseBalance() {
 
-        Account account = new Account("Alice");
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
+
+        Account account = new Account("Alice", aliceUser);
 
         account.deposit(new BigDecimal("100"));
 
@@ -27,7 +32,12 @@ public class AccountTest {
     @Test
     void withdrawShouldDecreaseBalance(){
 
-        Account account = new Account("Alice");
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
+
+        Account account = new Account("Alice", aliceUser);
 
         account.deposit(new BigDecimal("500"));
 
@@ -39,8 +49,13 @@ public class AccountTest {
 
     @Test
     void depositShouldRejectNegativeAmount() {
-        
-        Account account = new Account("Alice");
+
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
+
+        Account account = new Account("Alice", aliceUser);
 
         assertThrows(
             InvalidAmountException.class,
@@ -51,8 +66,12 @@ public class AccountTest {
 
     @Test
     void depositShouldRejectZeroAmount() {
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
 
-        Account account = new Account("Alice");
+        Account account = new Account("Alice", aliceUser);
 
         assertThrows(
             InvalidAmountException.class,
@@ -63,8 +82,12 @@ public class AccountTest {
 
     @Test
     void withdrawShouldRejectNegativeAmount() {
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
 
-        Account account = new Account("Alice");
+        Account account = new Account("Alice", aliceUser);
 
         assertThrows(
             InvalidAmountException.class,
@@ -74,8 +97,12 @@ public class AccountTest {
 
     @Test
     void withdrawShouldRejectZeroAmount() {
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
 
-        Account account = new Account("Alice");
+        Account account = new Account("Alice", aliceUser);
 
         assertThrows(
             InvalidAmountException.class,
@@ -85,8 +112,12 @@ public class AccountTest {
 
     @Test
     void withdrawShouldRejectInsufficientFunds() {
+        User aliceUser = new User(
+            "alice@example.com",
+            "hashed-password"
+        );
 
-        Account account = new Account("Alice");
+        Account account = new Account("Alice", aliceUser);
 
         account.deposit(new BigDecimal("500"));
 

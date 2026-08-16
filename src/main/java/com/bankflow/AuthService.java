@@ -20,7 +20,7 @@ public class AuthService {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("Email already registered");
         }
-        
+
         String hashedPassword = passwordEncoder.encode(password);
 
         User user = new User(email, hashedPassword);
@@ -42,6 +42,11 @@ public class AuthService {
 
         return user;
         
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
 }

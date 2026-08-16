@@ -19,12 +19,12 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account createAccount(String ownerName) {
+    public Account createAccount(String ownerName, User user) {
         // Account account = new Account(nextId, ownerName);
         // accounts.put(nextId, account);
         // nextId += 1;
         // return account;
-        Account account = new Account(ownerName);
+        Account account = new Account(ownerName, user);
         return accountRepository.save(account);
     }
 
@@ -38,6 +38,15 @@ public class AccountService {
         return accountRepository.findById(id)
         .orElseThrow(() -> new AccountNotFoundException("Account not found"));
         
+    }
+
+    public Account getAccountForUser(Long accountId, User user) {
+
+        return accountRepository
+            .findByIdAndUserId(accountId, user.getId())
+            .orElseThrow(() -> 
+                new AccountNotFoundException("Account not found")
+            );
     }
 
     public Account deposit(Long id, BigDecimal amount) {

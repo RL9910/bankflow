@@ -20,6 +20,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public class TransferIntegrationTest {
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Container
     static PostgreSQLContainer<?> postgres =
         new PostgreSQLContainer<>("postgres:16");
@@ -52,8 +55,21 @@ public class TransferIntegrationTest {
     @Test
     @Transactional
     void transferShouldPersistBothBalanceChanges() {
-        Account alice = accountRepository.save(new Account("Alice"));
-        Account bob = accountRepository.save(new Account("Bob"));
+        User aliceUser = userRepository.save(
+            new User("alice@example.com", "hashed-password")
+        );
+
+        User bobUser = userRepository.save(
+            new User("bob@example.com", "hashed-password")
+        );
+
+        Account alice = accountRepository.save(
+            new Account("Alice", aliceUser)
+        );
+
+        Account bob = accountRepository.save(
+            new Account("Bob", bobUser)
+        );
 
         alice.deposit(new BigDecimal("100"));
         accountRepository.save(alice);
@@ -86,8 +102,21 @@ public class TransferIntegrationTest {
     @Test
     void failedTransferShouldRollbackChanges() {
 
-        Account alice = accountRepository.save(new Account("Alice"));
-        Account bob = accountRepository.save(new Account("Bob"));
+        User aliceUser = userRepository.save(
+            new User("alice@example.com", "hashed-password")
+        );
+
+        User bobUser = userRepository.save(
+            new User("bob@example.com", "hashed-password")
+        );
+
+        Account alice = accountRepository.save(
+            new Account("Alice", aliceUser)
+        );
+
+        Account bob = accountRepository.save(
+            new Account("Bob", bobUser)
+        );
 
         alice.deposit(new BigDecimal("100"));
         accountRepository.save(alice);

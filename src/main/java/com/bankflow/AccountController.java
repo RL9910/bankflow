@@ -8,27 +8,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
 
+import org.springframework.security.core.Authentication;
+
 @RestController
 public class AccountController {
 
     private final AccountService accountService;
+    private final AuthService authService;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, AuthService authService) {
         this.accountService = accountService;
+        this.authService = authService;
     }
 
     @GetMapping("/accounts/{id}")
-    public Account getAccount(@PathVariable Long id) {
+    public Account getAccount(@PathVariable Long id, Authentication authentication) {
 
-        return accountService.getAccount(id);
+        String email = authentication.getName();
+
+        User user = authService.getUserByEmail(email);
+
+        return accountService.getAccountForUser(id, user);
     }
 
     @PostMapping("/accounts")
-    public Account createAccount(@RequestBody CreateAccountRequest request) {
+    public Account createAccount(@RequestBody CreateAccountRequest request, Authentication authentication) {
 
-        String ownerName = request.getOwnerName();
+        // String ownerName = request.getOwnerName();
 
-        return accountService.createAccount(ownerName);
+        // return accountService.createAccount(ownerName);
+
+        String email = authentication.getName();
+
+        User user = authService.getUserByEmail(email);
+
+        return accountService.createAccount(
+            request.getOwnerName(),
+            user
+        );
 
     }
 

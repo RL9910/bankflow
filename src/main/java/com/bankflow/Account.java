@@ -7,6 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 @Entity
 public class Account{
 
@@ -17,18 +20,25 @@ public class Account{
     private String ownerName;
     private BigDecimal balance;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
 
     protected Account() {}   
 
-    public Account(String ownerName){
-
+    public Account(String ownerName, User user) {
         this.ownerName = ownerName;
+        this.user = user;
         this.balance = BigDecimal.ZERO;
-
     }
 
     public Long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void deposit(BigDecimal amount){
