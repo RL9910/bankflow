@@ -49,19 +49,37 @@ public class AccountService {
             );
     }
 
-    public Account deposit(Long id, BigDecimal amount) {
+    // public Account deposit(Long id, BigDecimal amount) {
 
-        Account account = this.getAccount(id);
+    //     Account account = this.getAccount(id);
+
+    //     account.deposit(amount);
+
+    //     return accountRepository.save(account);
+
+    // }
+
+    // public Account withdraw(Long id, BigDecimal amount) {
+
+    //     Account account = this.getAccount(id);
+
+    //     account.withdraw(amount);
+
+    //     return accountRepository.save(account);
+    // }
+
+    public Account depositForUser(Long id, BigDecimal amount, User user) {
+
+        Account account = getAccountForUser(id, user);
 
         account.deposit(amount);
 
         return accountRepository.save(account);
-
     }
 
-    public Account withdraw(Long id, BigDecimal amount) {
+    public Account withdrawForUser(Long id, BigDecimal amount, User user) {
 
-        Account account = this.getAccount(id);
+        Account account = getAccountForUser(id, user);
 
         account.withdraw(amount);
 

@@ -24,13 +24,19 @@ public class TransferService {
     // }
 
     @Transactional
-    public void transfer(Long fromId, Long toId, BigDecimal amount) {
+    public void transfer(Long fromId, Long toId, BigDecimal amount, User currentUser) {
 
-        Account from = accountRepository.findById(fromId)
-            .orElseThrow(() -> new AccountNotFoundException("Source account not found"));
+        Account from = accountRepository
+            .findByIdAndUserId(fromId, currentUser.getId())
+            .orElseThrow(() ->
+                new AccountNotFoundException("Source account not found")
+            );
 
-        Account to = accountRepository.findById(toId)
-            .orElseThrow(() -> new AccountNotFoundException("Destination account not found"));
+        Account to = accountRepository
+            .findById(toId)
+            .orElseThrow(() -> 
+                new AccountNotFoundException("Destination account not found")
+            );
 
         from.withdraw(amount);
         to.deposit(amount);

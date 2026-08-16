@@ -57,22 +57,18 @@ public class TransferServiceTest {
 
         AccountRepository accountRepository = mock(AccountRepository.class);
 
-        User aliceUser = new User(
-            "alice@example.com",
-            "hashed-password"
-        );
+        User aliceUser = mock(User.class);
+        User bobUser = mock(User.class);
 
-        User bobUser = new User(
-            "bob@example.com",
-            "hashed-password"
-        );
+        when(aliceUser.getId()).thenReturn(1L);
+        when(bobUser.getId()).thenReturn(2L);
 
         Account alice = new Account("Alice", aliceUser);
         Account bob = new Account("Bob", bobUser);
 
         alice.deposit(new BigDecimal("100"));
 
-        when(accountRepository.findById(1L))
+        when(accountRepository.findByIdAndUserId(1L, 1L))
             .thenReturn(Optional.of(alice));
 
         when(accountRepository.findById(2L))
@@ -83,7 +79,8 @@ public class TransferServiceTest {
         transferService.transfer(
             1L,
             2L,
-            new BigDecimal("50")
+            new BigDecimal("50"),
+            aliceUser
         );
 
         assertEquals(new BigDecimal("50"), alice.getBalance());
@@ -95,22 +92,18 @@ public class TransferServiceTest {
 
         AccountRepository accountRepository = mock(AccountRepository.class);
 
-        User aliceUser = new User(
-            "alice@example.com",
-            "hashed-password"
-        );
+        User aliceUser = mock(User.class);
+        User bobUser = mock(User.class);
 
-        User bobUser = new User(
-            "bob@example.com",
-            "hashed-password"
-        );
+        when(aliceUser.getId()).thenReturn(1L);
+        when(bobUser.getId()).thenReturn(2L);
 
         Account alice = new Account("Alice", aliceUser);
         Account bob = new Account("Bob", bobUser);
 
         alice.deposit(new BigDecimal("10"));
 
-        when(accountRepository.findById(1L))
+        when(accountRepository.findByIdAndUserId(1L, 1L))
             .thenReturn(Optional.of(alice));
 
         when(accountRepository.findById(2L))
@@ -123,7 +116,8 @@ public class TransferServiceTest {
             () -> transferService.transfer(
                 1L,
                 2L,
-                new BigDecimal("50")
+                new BigDecimal("50"),
+                aliceUser
             )
         );
 

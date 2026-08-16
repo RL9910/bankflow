@@ -50,17 +50,37 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/{id}/deposit")
-    public Account deposit(@PathVariable Long id, @Valid @RequestBody AmountRequest amount) {
+    public Account deposit(
+            @PathVariable Long id,
+            @Valid @RequestBody AmountRequest request,
+            Authentication authentication) {
 
-        return accountService.deposit(id, amount.getAmount());
+        String email = authentication.getName();
 
+        User user = authService.getUserByEmail(email);
+
+        return accountService.depositForUser(
+            id,
+            request.getAmount(),
+            user
+        );
     }
 
     @PostMapping("/accounts/{id}/withdraw")
-    public Account withdraw(@PathVariable Long id, @Valid @RequestBody AmountRequest amount) {
+    public Account withdraw(
+            @PathVariable Long id,
+            @Valid @RequestBody AmountRequest request,
+            Authentication authentication) {
 
-        return accountService.withdraw(id, amount.getAmount());
+        String email = authentication.getName();
 
+        User user = authService.getUserByEmail(email);
+
+        return accountService.withdrawForUser(
+            id,
+            request.getAmount(),
+            user
+        );
     }
 
 

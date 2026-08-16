@@ -77,7 +77,8 @@ public class TransferIntegrationTest {
         transferService.transfer(
             alice.getId(),
             bob.getId(),
-            new BigDecimal("40")
+            new BigDecimal("40"),
+            aliceUser
         );
 
         Account updatedAlice = accountRepository
@@ -126,7 +127,8 @@ public class TransferIntegrationTest {
             () -> transferService.transfer(
                 alice.getId(),
                 bob.getId(),
-                new BigDecimal("500")
+                new BigDecimal("500"),
+                aliceUser
             )
         );
 
