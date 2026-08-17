@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -14,9 +18,14 @@ public class AccountService {
     // private long nextId = 1;
 
     private final AccountRepository accountRepository;
+    private final TransactionRecordRepository transactionRecordRepository;
 
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService(
+            AccountRepository accountRepository,
+            TransactionRecordRepository transactionRecordRepository) {
+
         this.accountRepository = accountRepository;
+        this.transactionRecordRepository = transactionRecordRepository;
     }
 
     public Account createAccount(String ownerName, User user) {
@@ -68,22 +77,59 @@ public class AccountService {
     //     return accountRepository.save(account);
     // }
 
+    @Transactional
     public Account depositForUser(Long id, BigDecimal amount, User user) {
 
         Account account = getAccountForUser(id, user);
 
         account.deposit(amount);
 
+        TransactionRecord record = new TransactionRecord(
+            "DEPOSIT",
+            amount,
+            null,
+            account.getId()
+        );
+
+        transactionRecordRepository.save(record);
+
         return accountRepository.save(account);
     }
 
-    public Account withdrawForUser(Long id, BigDecimal amount, User user) {
+    @Transactional
+    public Account withdrawForUser(
+            Long id,
+            BigDecimal amount,
+            User user) {
 
         Account account = getAccountForUser(id, user);
 
         account.withdraw(amount);
 
+        TransactionRecord record = new TransactionRecord(
+            "WITHDRAWAL",
+            amount,
+            account.getId(),
+            null
+        );
+
+        transactionRecordRepository.save(record);
+
         return accountRepository.save(account);
+    }
+
+    public List<TransactionRecord> getTransactionsForUser(
+            Long accountId,
+            User user) {
+
+        // First verify this account belongs to this user
+        getAccountForUser(accountId, user);
+
+        return transactionRecordRepository
+            .findByFromAccountIdOrToAccountId(
+                accountId,
+                accountId
+            );
     }
 
 }

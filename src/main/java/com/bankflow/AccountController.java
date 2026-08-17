@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 
 import org.springframework.security.core.Authentication;
 
+import java.util.List;
+
 @RestController
 public class AccountController {
 
@@ -81,6 +83,18 @@ public class AccountController {
             request.getAmount(),
             user
         );
+    }
+
+    @GetMapping("/accounts/{id}/transactions")
+    public List<TransactionRecord> getTransactions(
+            @PathVariable Long id,
+            Authentication authentication) {
+
+        String email = authentication.getName();
+
+        User user = authService.getUserByEmail(email);
+
+        return accountService.getTransactionsForUser(id, user);
     }
 
 

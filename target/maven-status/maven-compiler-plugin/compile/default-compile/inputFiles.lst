@@ -21,6 +21,8 @@
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/Main.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/RegisterRequest.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/SecurityConfig.java
+/Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/TransactionRecord.java
+/Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/TransactionRecordRepository.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/TransferController.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/TransferRequest.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/TransferService.java

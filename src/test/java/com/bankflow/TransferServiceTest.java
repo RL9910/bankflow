@@ -74,7 +74,14 @@ public class TransferServiceTest {
         when(accountRepository.findById(2L))
             .thenReturn(Optional.of(bob));
 
-        TransferService transferService = new TransferService(accountRepository);
+        TransactionRecordRepository transactionRecordRepository =
+            mock(TransactionRecordRepository.class);
+
+        TransferService transferService =
+            new TransferService(
+                accountRepository,
+                transactionRecordRepository
+            );
 
         transferService.transfer(
             1L,
@@ -109,7 +116,14 @@ public class TransferServiceTest {
         when(accountRepository.findById(2L))
             .thenReturn(Optional.of(bob));
 
-        TransferService transferService = new TransferService(accountRepository);
+        TransactionRecordRepository transactionRecordRepository =
+            mock(TransactionRecordRepository.class);
+
+        TransferService transferService =
+            new TransferService(
+                accountRepository,
+                transactionRecordRepository
+            );
 
         assertThrows(
             InsufficientFundsException.class,
@@ -143,8 +157,14 @@ public class TransferServiceTest {
         when(accountRepository.findByIdAndUserId(2L, 1L))
             .thenReturn(Optional.empty());
 
+        TransactionRecordRepository transactionRecordRepository =
+            mock(TransactionRecordRepository.class);
+
         TransferService transferService =
-            new TransferService(accountRepository);
+            new TransferService(
+                accountRepository,
+                transactionRecordRepository
+            );
 
         assertThrows(
             AccountNotFoundException.class,

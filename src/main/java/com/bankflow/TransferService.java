@@ -10,9 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransferService {
 
     private final AccountRepository accountRepository;
+    private final TransactionRecordRepository transactionRecordRepository;
 
-    public TransferService(AccountRepository accountRepository) {
+    public TransferService(
+            AccountRepository accountRepository,
+            TransactionRecordRepository transactionRecordRepository) {
+
         this.accountRepository = accountRepository;
+        this.transactionRecordRepository = transactionRecordRepository;
     }
 
     // public void transfer(Account from, Account to, BigDecimal amount) {
@@ -40,6 +45,15 @@ public class TransferService {
 
         from.withdraw(amount);
         to.deposit(amount);
+
+        TransactionRecord record = new TransactionRecord(
+            "TRANSFER",
+            amount,
+            from.getId(),
+            to.getId()
+        );
+
+        transactionRecordRepository.save(record);
 
     }
 
