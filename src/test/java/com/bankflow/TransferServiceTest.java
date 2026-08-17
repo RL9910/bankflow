@@ -124,4 +124,37 @@ public class TransferServiceTest {
         assertEquals(new BigDecimal("10"), alice.getBalance());
         assertEquals(BigDecimal.ZERO, bob.getBalance());
     }
+
+
+    @Test
+    void transferShouldRejectSourceAccountOwnedByAnotherUser() {
+
+        AccountRepository accountRepository = mock(AccountRepository.class);
+
+        User aliceUser = mock(User.class);
+        when(aliceUser.getId()).thenReturn(1L);
+
+        User bobUser = mock(User.class);
+        when(bobUser.getId()).thenReturn(2L);
+
+        Account bobAccount = new Account("Bob", bobUser);
+        bobAccount.deposit(new BigDecimal("100"));
+
+        when(accountRepository.findByIdAndUserId(2L, 1L))
+            .thenReturn(Optional.empty());
+
+        TransferService transferService =
+            new TransferService(accountRepository);
+
+        assertThrows(
+            AccountNotFoundException.class,
+            () -> transferService.transfer(
+                2L,   // Bob's account
+                1L,
+                new BigDecimal("50"),
+                aliceUser
+            )
+        );
+    }
+
 }

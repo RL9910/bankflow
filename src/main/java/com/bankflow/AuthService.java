@@ -18,7 +18,7 @@ public class AuthService {
     public User register(String email, String password) {
         
         if (userRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException("Email already registered");
+            throw new EmailAlreadyExistsException("Email already registered");
         }
 
         String hashedPassword = passwordEncoder.encode(password);
@@ -32,13 +32,15 @@ public class AuthService {
     public User login(String email, String password) {
 
         User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+            .orElseThrow(() ->
+                new InvalidCredentialsException("Invalid email or password")
+            );
 
-        String hashedPassword = user.getPassword();
-
-        if(!passwordEncoder.matches(password, hashedPassword)) {
-            throw new RuntimeException("Invalid email or password");
-        }
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new InvalidCredentialsException(
+                "Invalid email or password"
+            );
+    }
 
         return user;
         

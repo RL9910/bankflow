@@ -1,3 +1,4 @@
+com/bankflow/InvalidCredentialsException.class
 com/bankflow/UserResponse.class
 com/bankflow/SecurityConfig.class
 com/bankflow/InvalidAmountException.class
@@ -8,6 +9,7 @@ com/bankflow/TransferService.class
 com/bankflow/JwtService.class
 com/bankflow/GlobalExceptionHandler.class
 com/bankflow/TransferRequest.class
+com/bankflow/EmailAlreadyExistsException.class
 com/bankflow/User.class
 com/bankflow/HelloController.class
 com/bankflow/Main.class

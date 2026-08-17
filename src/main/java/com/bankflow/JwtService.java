@@ -9,17 +9,26 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import io.jsonwebtoken.io.Decoders;
+
 @Service
 public class JwtService {
 
+    private final String secretKey;
 
-    private static final String SECRET =
-        "bankflow-super-secret-jwt-signing-key-123456789";
+    public JwtService(
+            @Value("${jwt.secret}") String secretKey) {
+        this.secretKey = secretKey;
+    }
+
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(
-            SECRET.getBytes(StandardCharsets.UTF_8)
-        );
+
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(User user) {

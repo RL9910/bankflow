@@ -32,4 +32,22 @@ public class GlobalExceptionHandler {
             .body(exception.getMessage());
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> handleInvalidCredentials(
+            InvalidCredentialsException exception) {
+
+        return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<String> handleEmailAlreadyExists(
+            EmailAlreadyExistsException exception) {
+
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(exception.getMessage());
+    }
+
 }

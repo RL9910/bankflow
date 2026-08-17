@@ -8,10 +8,12 @@
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AuthService.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/BankFlowApplication.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/CreateAccountRequest.java
+/Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/EmailAlreadyExistsException.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/GlobalExceptionHandler.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/HelloController.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/InsufficientFundsException.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/InvalidAmountException.java
+/Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/InvalidCredentialsException.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/JwtAuthenticationFilter.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/JwtService.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/LoginRequest.java
