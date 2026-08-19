@@ -13,6 +13,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import org.springframework.cache.CacheManager;
+
 public class TransferServiceTest {
 
     // @Test
@@ -77,10 +79,13 @@ public class TransferServiceTest {
         TransactionRecordRepository transactionRecordRepository =
             mock(TransactionRecordRepository.class);
 
+        CacheManager cacheManager = mock(CacheManager.class);
+
         TransferService transferService =
             new TransferService(
                 accountRepository,
-                transactionRecordRepository
+                transactionRecordRepository,
+                cacheManager
             );
 
         transferService.transfer(
@@ -119,10 +124,13 @@ public class TransferServiceTest {
         TransactionRecordRepository transactionRecordRepository =
             mock(TransactionRecordRepository.class);
 
+        CacheManager cacheManager = mock(CacheManager.class);
+
         TransferService transferService =
             new TransferService(
                 accountRepository,
-                transactionRecordRepository
+                transactionRecordRepository,
+                cacheManager
             );
 
         assertThrows(
@@ -160,10 +168,13 @@ public class TransferServiceTest {
         TransactionRecordRepository transactionRecordRepository =
             mock(TransactionRecordRepository.class);
 
+        CacheManager cacheManager = mock(CacheManager.class);
+
         TransferService transferService =
             new TransferService(
                 accountRepository,
-                transactionRecordRepository
+                transactionRecordRepository,
+                cacheManager
             );
 
         assertThrows(

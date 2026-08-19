@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
 
 @Service
 public class AccountService {
@@ -85,6 +86,10 @@ public class AccountService {
     //     return accountRepository.save(account);
     // }
 
+    @CacheEvict(
+        value = "accounts",
+        key = "#id + ':' + #user.id"
+    )
     @Transactional
     public Account depositForUser(Long id, BigDecimal amount, User user) {
 
@@ -104,6 +109,10 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    @CacheEvict(
+        value = "accounts",
+        key = "#id + ':' + #user.id"
+    )
     @Transactional
     public Account withdrawForUser(
             Long id,

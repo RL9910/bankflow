@@ -5,19 +5,25 @@ import java.math.BigDecimal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 
 @Service
 public class TransferService {
 
     private final AccountRepository accountRepository;
     private final TransactionRecordRepository transactionRecordRepository;
+    private final CacheManager cacheManager;
 
     public TransferService(
             AccountRepository accountRepository,
-            TransactionRecordRepository transactionRecordRepository) {
+            TransactionRecordRepository transactionRecordRepository,
+            CacheManager cacheManager) {
 
         this.accountRepository = accountRepository;
         this.transactionRecordRepository = transactionRecordRepository;
+        this.cacheManager = cacheManager;
     }
 
     // public void transfer(Account from, Account to, BigDecimal amount) {
@@ -28,6 +34,11 @@ public class TransferService {
 
     // }
 
+
+    // @CacheEvict(
+    //     value = "accounts",
+    //     allEntries = true
+    // )
     @Transactional
     public void transfer(Long fromId, Long toId, BigDecimal amount, User currentUser) {
 
@@ -54,6 +65,18 @@ public class TransferService {
         );
 
         transactionRecordRepository.save(record);
+
+        Cache accountsCache = cacheManager.getCache("accounts");
+
+        if (accountsCache != null) {
+            accountsCache.evict(
+                from.getId() + ":" + currentUser.getId()
+            );
+
+            accountsCache.evict(
+                to.getId() + ":" + to.getUser().getId()
+            );
+        }
 
     }
 
