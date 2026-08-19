@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
+
 @Service
 public class AccountService {
 
@@ -49,7 +51,13 @@ public class AccountService {
         
     }
 
+    @Cacheable(
+        value = "accounts",
+        key = "#accountId + ':' + #user.id"
+    )
     public Account getAccountForUser(Long accountId, User user) {
+
+        System.out.println("QUERYING DATABASE");
 
         return accountRepository
             .findByIdAndUserId(accountId, user.getId())

@@ -2,6 +2,7 @@
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AccountController.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AccountNotFoundException.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AccountRepository.java
+/Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AccountResponse.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AccountService.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AmountRequest.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/AuthController.java
@@ -19,6 +20,7 @@
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/LoginRequest.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/LoginResponse.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/Main.java
+/Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/RedisConfig.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/RegisterRequest.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/SecurityConfig.java
 /Users/richardlee/Local Documents/coding/bankflow_project/bankflow/src/main/java/com/bankflow/TransactionRecord.java

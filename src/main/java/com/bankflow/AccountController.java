@@ -24,13 +24,19 @@ public class AccountController {
     }
 
     @GetMapping("/accounts/{id}")
-    public Account getAccount(@PathVariable Long id, Authentication authentication) {
+    public AccountResponse getAccount(@PathVariable Long id, Authentication authentication) {
 
         String email = authentication.getName();
 
         User user = authService.getUserByEmail(email);
 
-        return accountService.getAccountForUser(id, user);
+        Account account = accountService.getAccountForUser(id, user);
+    
+        return new AccountResponse(
+            account.getId(),
+            account.getOwnerName(),
+            account.getBalance()
+        );
     }
 
     @PostMapping("/accounts")

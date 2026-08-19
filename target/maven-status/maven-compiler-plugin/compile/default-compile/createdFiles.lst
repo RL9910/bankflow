@@ -9,6 +9,7 @@ com/bankflow/AccountService.class
 com/bankflow/TransferService.class
 com/bankflow/JwtService.class
 com/bankflow/GlobalExceptionHandler.class
+com/bankflow/AccountResponse.class
 com/bankflow/TransactionRecord.class
 com/bankflow/TransferRequest.class
 com/bankflow/EmailAlreadyExistsException.class
@@ -25,6 +26,7 @@ com/bankflow/AccountController.class
 com/bankflow/AuthController.class
 com/bankflow/LoginRequest.class
 com/bankflow/AccountRepository.class
+com/bankflow/RedisConfig.class
 com/bankflow/TransferController.class
 com/bankflow/AmountRequest.class
 com/bankflow/BankFlowApplication.class
