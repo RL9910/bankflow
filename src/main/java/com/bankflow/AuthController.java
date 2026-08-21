@@ -40,24 +40,37 @@ public class AuthController {
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
-        if (!rateLimitService.isAllowed(request.getEmail())) {
+        if (rateLimitService.isBlocked(request.getEmail())) {
             return ResponseEntity
                 .status(429)
                 .body("Too many login attempts. Try again later.");
         }
 
 
-        User user = authService.login(
-            request.getEmail(),
-            request.getPassword()
-        );
+        try {
 
-        rateLimitService.resetAttempts(request.getEmail())
+            User user = authService.login(
+                request.getEmail(),
+                request.getPassword()
+            );
 
-        String token = jwtService.generateToken(user);
+            rateLimitService.resetAttempts(request.getEmail());
 
-        return ResponseEntity.ok(new LoginResponse(token));
+            String token = jwtService.generateToken(user);
 
+            return ResponseEntity.ok(new LoginResponse(token));
+
+
+        } catch (Exception e) {
+
+            rateLimitService.recordFailedAttempt(
+                request.getEmail()
+            );
+
+            throw e;
+        }
+
+       
     }
 
 
