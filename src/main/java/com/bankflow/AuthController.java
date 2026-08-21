@@ -4,15 +4,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.http.ResponseEntity;
+
 @RestController
 public class AuthController {
 
     private final AuthService authService;
     private final JwtService jwtService;
+    private final RateLimitService rateLimitService;
 
-    public AuthController(AuthService authService, JwtService jwtService) {
+    public AuthController(
+        AuthService authService, 
+        JwtService jwtService,
+        RateLimitService rateLimitService
+        ) {
         this.authService = authService;
         this.jwtService = jwtService;
+        this.rateLimitService = rateLimitService;
     }
 
     @PostMapping("/auth/register")
@@ -30,16 +38,25 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+
+        if (!rateLimitService.isAllowed(request.getEmail())) {
+            return ResponseEntity
+                .status(429)
+                .body("Too many login attempts. Try again later.");
+        }
+
 
         User user = authService.login(
             request.getEmail(),
             request.getPassword()
         );
 
+        rateLimitService.resetAttempts(request.getEmail())
+
         String token = jwtService.generateToken(user);
 
-        return new LoginResponse(token);
+        return ResponseEntity.ok(new LoginResponse(token));
 
     }
 
