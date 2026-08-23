@@ -15,15 +15,18 @@ public class TransferService {
     private final AccountRepository accountRepository;
     private final TransactionRecordRepository transactionRecordRepository;
     private final CacheManager cacheManager;
+    private final TransferEventProducer transferEventProducer;
 
     public TransferService(
             AccountRepository accountRepository,
             TransactionRecordRepository transactionRecordRepository,
-            CacheManager cacheManager) {
+            CacheManager cacheManager,
+            TransferEventProducer transferEventProducer) {
 
         this.accountRepository = accountRepository;
         this.transactionRecordRepository = transactionRecordRepository;
         this.cacheManager = cacheManager;
+        this.transferEventProducer = transferEventProducer;
     }
 
     // public void transfer(Account from, Account to, BigDecimal amount) {
@@ -77,6 +80,15 @@ public class TransferService {
                 to.getId() + ":" + to.getUser().getId()
             );
         }
+
+        TransferCompletedEvent event = 
+            new TransferCompletedEvent(
+                from.getId(),
+                to.getId(),
+                amount
+            );
+
+        transferEventProducer.publish(event);
 
     }
 

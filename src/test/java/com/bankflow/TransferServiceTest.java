@@ -81,11 +81,15 @@ public class TransferServiceTest {
 
         CacheManager cacheManager = mock(CacheManager.class);
 
+        TransferEventProducer transferEventProducer =
+            mock(TransferEventProducer.class);
+
         TransferService transferService =
             new TransferService(
                 accountRepository,
                 transactionRecordRepository,
-                cacheManager
+                cacheManager,
+                transferEventProducer
             );
 
         transferService.transfer(
@@ -126,11 +130,15 @@ public class TransferServiceTest {
 
         CacheManager cacheManager = mock(CacheManager.class);
 
+        TransferEventProducer transferEventProducer =
+            mock(TransferEventProducer.class);
+
         TransferService transferService =
             new TransferService(
                 accountRepository,
                 transactionRecordRepository,
-                cacheManager
+                cacheManager,
+                transferEventProducer
             );
 
         assertThrows(
@@ -170,11 +178,15 @@ public class TransferServiceTest {
 
         CacheManager cacheManager = mock(CacheManager.class);
 
+        TransferEventProducer transferEventProducer =
+            mock(TransferEventProducer.class);
+
         TransferService transferService =
             new TransferService(
                 accountRepository,
                 transactionRecordRepository,
-                cacheManager
+                cacheManager,
+                transferEventProducer
             );
 
         assertThrows(

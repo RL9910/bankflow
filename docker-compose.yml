@@ -1,0 +1,6 @@
+services:
+  kafka:
+    image: apache/kafka:3.9.1
+    container_name: bankflow-kafka
+    ports:
+      - "9092:9092"
