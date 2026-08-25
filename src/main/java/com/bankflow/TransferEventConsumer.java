@@ -6,6 +6,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class TransferEventConsumer {
 
+    private final NotificationService notificationService;
+
+
+    public TransferEventConsumer(NotificationService notificationService) {
+
+        this.notificationService = notificationService;
+
+    }
+
     @KafkaListener(
         topics = "transfer-events",
         groupId = "bankflow"
@@ -13,14 +22,7 @@ public class TransferEventConsumer {
     public void handleTransferCompleted(
         TransferCompletedEvent event
     ) {
-        System.out.println(
-            "Received transfer event: "
-            + event.getFromAccountId()
-            + " ---> "
-            + event.getToAccountId()
-            + " amount: "
-            + event.getAmount()
-        );
+        notificationService.sendTransferNotification(event);
     }
 
 }
