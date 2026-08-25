@@ -16,10 +16,6 @@ public class NotificationService {
             + event.getAmount()
         );
 
-        throw new RuntimeException(
-            "Notification service failed!"
-        );
-
     }
 
 }

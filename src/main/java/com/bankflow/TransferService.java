@@ -9,24 +9,33 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 @Service
 public class TransferService {
 
     private final AccountRepository accountRepository;
     private final TransactionRecordRepository transactionRecordRepository;
     private final CacheManager cacheManager;
-    private final TransferEventProducer transferEventProducer;
+    // private final TransferEventProducer transferEventProducer;
+    private final ObjectMapper objectMapper;
+    private final OutboxEventRepository outboxEventRepository;
 
     public TransferService(
             AccountRepository accountRepository,
             TransactionRecordRepository transactionRecordRepository,
             CacheManager cacheManager,
-            TransferEventProducer transferEventProducer) {
+            // TransferEventProducer transferEventProducer
+            OutboxEventRepository outboxEventRepository,
+            ObjectMapper objectMapper) {
 
         this.accountRepository = accountRepository;
         this.transactionRecordRepository = transactionRecordRepository;
         this.cacheManager = cacheManager;
-        this.transferEventProducer = transferEventProducer;
+        // this.transferEventProducer = transferEventProducer;
+        this.outboxEventRepository = outboxEventRepository;
+        this.objectMapper = objectMapper;
     }
 
     // public void transfer(Account from, Account to, BigDecimal amount) {
@@ -88,7 +97,27 @@ public class TransferService {
                 amount
             );
 
-        transferEventProducer.publish(event);
+        try {
+
+            String payload = objectMapper.writeValueAsString(event);
+
+            OutboxEvent outboxEvent =
+                new OutboxEvent(
+                    "TRANSFER_COMPLETED",
+                    payload
+                );
+
+            outboxEventRepository.save(outboxEvent);
+
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(
+                "Failed to serialize transfer event",
+                e
+            );
+        }
+
+        // transferEventProducer.publish(event);
 
     }
 

@@ -15,6 +15,13 @@ import java.util.Optional;
 
 import org.springframework.cache.CacheManager;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+
+import static org.mockito.Mockito.never;
+
 public class TransferServiceTest {
 
     // @Test
@@ -81,15 +88,21 @@ public class TransferServiceTest {
 
         CacheManager cacheManager = mock(CacheManager.class);
 
-        TransferEventProducer transferEventProducer =
-            mock(TransferEventProducer.class);
+        OutboxEventRepository outboxEventRepository =
+            mock(OutboxEventRepository.class);
+
+        // TransferEventProducer transferEventProducer =
+        //     mock(TransferEventProducer.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         TransferService transferService =
             new TransferService(
                 accountRepository,
                 transactionRecordRepository,
                 cacheManager,
-                transferEventProducer
+                outboxEventRepository,
+                objectMapper
             );
 
         transferService.transfer(
@@ -101,6 +114,9 @@ public class TransferServiceTest {
 
         assertEquals(new BigDecimal("50"), alice.getBalance());
         assertEquals(new BigDecimal("50"), bob.getBalance());
+
+        verify(outboxEventRepository)
+            .save(any(OutboxEvent.class));
     }
 
     @Test
@@ -130,15 +146,21 @@ public class TransferServiceTest {
 
         CacheManager cacheManager = mock(CacheManager.class);
 
-        TransferEventProducer transferEventProducer =
-            mock(TransferEventProducer.class);
+        OutboxEventRepository outboxEventRepository =
+            mock(OutboxEventRepository.class);
+
+        // TransferEventProducer transferEventProducer =
+        //     mock(TransferEventProducer.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         TransferService transferService =
             new TransferService(
                 accountRepository,
                 transactionRecordRepository,
                 cacheManager,
-                transferEventProducer
+                outboxEventRepository,
+                objectMapper
             );
 
         assertThrows(
@@ -153,6 +175,10 @@ public class TransferServiceTest {
 
         assertEquals(new BigDecimal("10"), alice.getBalance());
         assertEquals(BigDecimal.ZERO, bob.getBalance());
+
+
+        verify(outboxEventRepository, never())
+            .save(any(OutboxEvent.class));
     }
 
 
@@ -178,15 +204,22 @@ public class TransferServiceTest {
 
         CacheManager cacheManager = mock(CacheManager.class);
 
-        TransferEventProducer transferEventProducer =
-            mock(TransferEventProducer.class);
+
+        OutboxEventRepository outboxEventRepository =
+            mock(OutboxEventRepository.class);
+
+        // TransferEventProducer transferEventProducer =
+        //     mock(TransferEventProducer.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         TransferService transferService =
             new TransferService(
                 accountRepository,
                 transactionRecordRepository,
                 cacheManager,
-                transferEventProducer
+                outboxEventRepository,
+                objectMapper
             );
 
         assertThrows(
@@ -198,6 +231,11 @@ public class TransferServiceTest {
                 aliceUser
             )
         );
+
+
+
+        verify(outboxEventRepository, never())
+            .save(any(OutboxEvent.class));
     }
 
 }

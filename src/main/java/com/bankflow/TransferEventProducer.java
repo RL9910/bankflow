@@ -3,6 +3,10 @@ package com.bankflow;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
+
+import org.springframework.kafka.support.SendResult;
+
 @Service
 public class TransferEventProducer {
 
@@ -14,8 +18,8 @@ public class TransferEventProducer {
             this.kafkaTemplate = kafkaTemplate;
         }
 
-    public void publish(TransferCompletedEvent event) {
-        kafkaTemplate.send(
+    public CompletableFuture<SendResult<String, TransferCompletedEvent>> publish(TransferCompletedEvent event) {
+        return kafkaTemplate.send(
             "transfer-events",
             event
         );
