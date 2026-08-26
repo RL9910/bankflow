@@ -12,6 +12,8 @@ import org.springframework.cache.CacheManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.util.UUID;
+
 @Service
 public class TransferService {
 
@@ -92,6 +94,7 @@ public class TransferService {
 
         TransferCompletedEvent event = 
             new TransferCompletedEvent(
+                UUID.randomUUID().toString(),
                 from.getId(),
                 to.getId(),
                 amount
