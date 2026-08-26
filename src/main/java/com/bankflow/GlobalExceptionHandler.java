@@ -5,6 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.bankflow.account.AccountNotFoundException;
+import com.bankflow.account.InvalidAmountException;
+import com.bankflow.account.InsufficientFundsException;
+
+import com.bankflow.auth.InvalidCredentialsException;
+import com.bankflow.auth.EmailAlreadyExistsException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

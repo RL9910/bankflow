@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.bankflow.account.Account;
+import com.bankflow.account.InvalidAmountException;
+import com.bankflow.account.InsufficientFundsException;
+import com.bankflow.user.User;
+
 public class AccountTest {
 
     @Test

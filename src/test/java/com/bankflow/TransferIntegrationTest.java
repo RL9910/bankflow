@@ -16,6 +16,15 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import com.bankflow.account.Account;
+import com.bankflow.account.AccountRepository;
+import com.bankflow.account.InsufficientFundsException;
+
+import com.bankflow.user.User;
+import com.bankflow.user.UserRepository;
+
+import com.bankflow.transfer.TransferService;
+
 @SpringBootTest(properties = {
     "spring.cache.type=none",
     "jwt.secret=dGVzdC1qd3Qtc2VjcmV0LWtleS10aGF0LWlzLWxvbmctaW5vdWdoLWZvci10ZXN0aW5n"
