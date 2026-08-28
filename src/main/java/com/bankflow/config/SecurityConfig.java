@@ -43,7 +43,12 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/register", "/auth/login").permitAll()
+                .requestMatchers(
+                    "/auth/register", 
+                    "/auth/login", 
+                    "/actuator/health",
+                    "/actuator/health/liveness",
+                    "/actuator/health/readiness").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(
