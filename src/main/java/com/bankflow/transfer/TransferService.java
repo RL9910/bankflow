@@ -23,6 +23,9 @@ import com.bankflow.account.Account;
 import com.bankflow.account.AccountNotFoundException;
 import com.bankflow.account.AccountRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class TransferService {
 
@@ -32,6 +35,9 @@ public class TransferService {
     // private final TransferEventProducer transferEventProducer;
     private final ObjectMapper objectMapper;
     private final OutboxEventRepository outboxEventRepository;
+
+    private static final Logger log =
+        LoggerFactory.getLogger(TransferService.class);
 
     public TransferService(
             AccountRepository accountRepository,
@@ -64,6 +70,13 @@ public class TransferService {
     // )
     @Transactional
     public void transfer(Long fromId, Long toId, BigDecimal amount, User currentUser) {
+
+        log.info(
+            "Transfer requested: fromAccount={}, toAccount={}, amount={}",
+            fromId,
+            toId,
+            amount
+        );
 
         Account from = accountRepository
             .findByIdAndUserId(fromId, currentUser.getId())
@@ -130,6 +143,13 @@ public class TransferService {
         }
 
         // transferEventProducer.publish(event);
+
+        log.info(
+            "Transfer completed: fromAccount={}, toAccount={}, amount={}",
+            fromId,
+            toId,
+            amount
+        );
 
     }
 
