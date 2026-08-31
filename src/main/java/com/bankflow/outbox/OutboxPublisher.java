@@ -10,12 +10,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bankflow.transfer.TransferCompletedEvent;
 import com.bankflow.transfer.TransferEventProducer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class OutboxPublisher {
 
     private final OutboxEventRepository outboxEventRepository;
     private final TransferEventProducer transferEventProducer;
     private final ObjectMapper objectMapper;
+
+    private static final Logger log =
+        LoggerFactory.getLogger(OutboxPublisher.class);
 
     public OutboxPublisher(
             OutboxEventRepository outboxEventRepository,
@@ -34,6 +40,11 @@ public class OutboxPublisher {
             outboxEventRepository.findByPublishedFalse();
 
         for (OutboxEvent event : events) {
+
+            log.info(
+                "Publishing outbox event: outboxId={}",
+                event.getId()
+            );
             
             try {
 
@@ -49,14 +60,24 @@ public class OutboxPublisher {
 
                 event.markPublished();
 
-                outboxEventRepository.save(event);                
+                outboxEventRepository.save(event);   
+
+                log.info(
+                    "Outbox event published successfully: outboxId={}",
+                    event.getId()
+                );             
 
             } catch (Exception e) {
-                System.out.println(
-                    "Failed to publish outbox event "
-                    + event.getId()
-                );             
-            }
+                // System.out.println(
+                //     "Failed to publish outbox event "
+                //     + event.getId()
+                // );             
+                log.error(
+                    "Failed to publish outbox event: outboxId={}",
+                    event.getId(),
+                    e
+                );
+    }
 
 
         }

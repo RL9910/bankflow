@@ -5,11 +5,17 @@ import org.springframework.stereotype.Component;
 
 import com.bankflow.transfer.TransferCompletedEvent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class TransferEventConsumer {
 
     private final NotificationService notificationService;
     private final ProcessedEventRepository processedEventRepository;
+
+    private static final Logger log =
+        LoggerFactory.getLogger(TransferEventConsumer.class);
 
     public TransferEventConsumer(
         NotificationService notificationService,
@@ -30,17 +36,12 @@ public class TransferEventConsumer {
         // 1. Check whether we already processed this event
         if (processedEventRepository.existsById(event.getEventId())) {
 
-            System.out.println(
-                "Duplicate event ignored: "
-                + event.getEventId()
-            );
+            log.warn("Skipping already processed event: eventId={}", event.getEventId());
 
             return;
         }
 
-        System.out.println(
-            "Processing event: " + event.getEventId()
-        );
+        log.info("Processing transfer event: eventId={}", event.getEventId());
 
         // 2. Process it
         notificationService.sendTransferNotification(event);
