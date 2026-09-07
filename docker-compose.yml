@@ -93,6 +93,21 @@ services:
       timeout: 5s
       retries: 5
 
+  notification-service:
+    build: ./notification-service
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+      NOTIFICATION_DB_URL: jdbc:postgresql://notification-postgres:5432/notificationdb
+
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+    depends_on:
+      notification-postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
   notification_postgres_data:
